@@ -6,6 +6,8 @@ The purpose of this project is to develop a  Model Predictive Controller to stee
 
 This was complex project to understand, I had to take help from many forum artciles, too many people to thank to get over hurdles during project.
 
+![alt tag](images/car.png)
+
 # The Vehicle Model
 The vehicle model used in this project is a kinematic bicycle model. It does not take into account inertia, friction and torque. The model is non-linear as it accounts for changes in heading direction. The model is centred around following key parameters:
  
