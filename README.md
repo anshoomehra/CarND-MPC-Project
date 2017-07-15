@@ -1,6 +1,35 @@
 # CarND-Controls-MPC
 Self-Driving Car Engineer Nanodegree Program
 
+# Project
+The purpose of this project is to develop a  Model Predictive Controller to steer a car around a track in a simulator. The simulator provides stream of values for the car containing the position, speed, heading direction & waypoints (reference trajectory, in Global Coordinate System).
+
+This was complex project to understand, I had to take help from many forum artciles, too many people to thank to get over hurdles during project.
+
+# The Vehicle Model
+The vehicle model used in this project is a kinematic bicycle model. It does not take into account inertia, friction and torque. The model is non-linear as it accounts for changes in heading direction. The model is centred around following key parameters:
+ 
+   * x,y denote the position of the car
+   * psi the heading direction
+   * v its velocity
+   * cte the cross-track error
+   * epsi the orientation error 
+   * Lf is the distance between gravity of the vehicle and the front wheels
+
+# Process Steps
+
+* Mathematical computations are performed in the vehicle coordinate system. Waypoints which are in Global Coordinate System are transfomed in vehicle coordinates, further a third order polynomial is then fitted to the waypoints. 
+* For every state value, Trajectory for N time steps is re-computed which mimimize cost function.
+* Cost Function: Main objective - to minimize our cross track, heading, and velocity errors. A further enhancement is to constrain erratic control inputs. For example, if we're making a turn, we'd like the turn to be smooth, not sharp. Additionally, the vehicle velocity should not change too radically. This can be achieved by Minimizing change-rate & Minimizing the value gap between sequential actuations.
+* To cover variable speed, I took help from forums to further improvise, by playing with Cost Minimization functions, I was able to achieve decent results.
+* T - Perdiction Horizon is the duration over which the future predictions are made. T is product of N times dt, where N is the number of time steps and dt is the how much time elapse between actuations. There are some general guidelines. T should be as large as possible, while dt should be as small as possible, hence create trade-offs. Short prediction horizons lead to more responsive controlers, but are less accurate. Larger values of dt result in less frequent actuations, which makes it harder to accurately approximate a continuous reference trajectory. This is sometimes called "discretization error". A good approach to setting N, dt, and T is to first determine a reasonable range for T and then tune dt and N appropriately, keeping the effect of each in mind. After trial and error, N=12 and dt=0.05 gace desired results.
+
+# Latency
+
+An additional complication of this project consists in taking delayed actuations into account. A delay of 100ms is introduced before the actuations are sent back to the simulator. Delays could lead to erractic behavior of the car and even may possibly go off the target trajectory.
+
+In contrast to PID, MPC can factor Delay/Latency in pipeline by constraining the controls to the values of the previous iteration for the duration of the latency. Thus the optimal trajectory is computed starting from the time after the latency period.
+
 ---
 
 ## Dependencies
