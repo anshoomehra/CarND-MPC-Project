@@ -32,6 +32,9 @@ An additional complication of this project consists in taking delayed actuations
 
 In contrast to PID, MPC can factor Delay/Latency in pipeline by constraining the controls to the values of the previous iteration for the duration of the latency. Thus the optimal trajectory is computed starting from the time after the latency period.
 
+# Video Demonstration of the Output
+https://youtu.be/jMRdCmgn0K4
+
 ---
 
 ## Dependencies
